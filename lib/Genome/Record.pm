@@ -14,7 +14,7 @@ use Genome::Const;
 my $_CACHE_FIND_VALUE = undef;
 
 sub new {
-    my ($class, $options) = @_;
+    my ( $class, $options ) = @_;
 
     my $self = ($options) ? $options : {};
     bless $self, $class;
@@ -30,7 +30,7 @@ sub find {
 
     if ( !defined $value ) {
         my $file = Genome::Record::get_file();
-        my $obj = Genome::Record::_get_obj_from_json_file($file);
+        my $obj  = Genome::Record::_get_obj_from_json_file($file);
         my $name = Genome::Record::get_name();
         $value = $obj->{$name};
     }
@@ -39,32 +39,30 @@ sub find {
 }
 
 sub get_name {
+
     # TODO: get data file name from pm file name automatically.
     croak 'get_name should be implemented at child class';
 }
 
 sub get_file {
     my $name = Genome::Record::get_name();
-    my $file = sprintf '%s/%s.json',
-        $Genome::Const::DATA_DIR, $name;
+    my $file = sprintf '%s/%s.json', $Genome::Const::DATA_DIR, $name;
 
     return $file;
 }
 
 sub save {
-    my ($self, $value) = @_;
+    my ( $self, $value ) = @_;
 
     if ( !defined $value ) {
         croak 'value is required.';
     }
 
     my $name = Genome::Record::get_name();
-    my $out_obj = +{
-        $name => $value,
-    };
+    my $out_obj = +{ $name => $value, };
 
     my $file = Genome::Record::get_file();
-    my $text = to_json($out_obj, +{pretty => 1});
+    my $text = to_json( $out_obj, +{ pretty => 1 } );
     open my $fh, '>', $file
         or croak "$file $OS_ERROR";
     print $fh, $text;
@@ -85,7 +83,7 @@ sub _get_text {
         or croak "$file $OS_ERROR";
     my $content = do {
         local $INPUT_RECORD_SEPARATOR = undef;
-        return <$fh>
+        return <$fh>;
     };
     close $fh;
 
@@ -100,7 +98,7 @@ sub _get_obj_from_json_file {
     }
 
     my $text = Genome::Record::_get_text($file);
-    my $obj = decode_json $text;
+    my $obj  = decode_json $text;
     return $obj;
 }
 

@@ -1,4 +1,4 @@
-.PHONY: dummy carton test testv
+.PHONY: dummy carton test testv tidy critic
 
 dummy:
 	@echo dummy
@@ -6,6 +6,14 @@ dummy:
 carton:
 	. ./env.sh; \
 	script/build/update_carton_modules.sh
+
+tidy:
+	. ./env.sh; \
+    script/dev/tidy.sh
+
+critic:
+	. ./env.sh; \
+	prove -cfrmv --timer --trap --state=adrian t t/99-perlcritic.t
 
 test:
 	. ./env.sh; \
@@ -15,3 +23,6 @@ test:
 testv:
 	. ./env.sh; \
 	prove -cfrmv --timer --trap --state=adrian t $(FILE)
+
+
+
