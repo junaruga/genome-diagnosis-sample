@@ -1,0 +1,10 @@
+{
+    "snps": [
+        { "snp": "rs1000152", "position": 3 },
+        { "snp": "rs100003", "position": 9 },
+        { "snp": "i6060864", "position": 12 },
+        { "snp": "rs1000007", "position": 15 },
+        { "snp": "rs28358574", "position": 53 },
+        { "snp": "rs10001483", "position": 105 }
+    ]
+}

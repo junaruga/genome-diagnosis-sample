@@ -1,0 +1,32 @@
+{
+    disease_snps: [
+        {
+            "id": 1,
+            "name": "Diabetes",
+            "possible_snps": [
+                "rs28358574"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Heart disease",
+            "possible_snps": [
+                "rs10001483", "rs1000152"
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Cancer",
+            "possible_snps": [
+                "i6060864"
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Alzheimer",
+            "possible_snps": [
+                "rs1000007", "rs100003"
+            ]
+        }
+    ]
+}

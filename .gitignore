@@ -1,0 +1,14 @@
+# Mac
+.DS_Store
+._*
+# vi
+*.swp
+# Emacs
+*~
+# Hidemaru
+*.BAK
+# Carton
+/cpanfile.snapshot
+/local/*
+# Test
+.prove
