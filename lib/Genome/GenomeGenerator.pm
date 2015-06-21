@@ -12,6 +12,9 @@ use String::Buffer;
 
 use Genome::Const;
 use Genome::Log qw( log );
+use Genome::Model::DiseaseSnp;
+use Genome::Model::Genome;
+use Genome::Model::Snp;
 
 # Total number of base pair.
 # Set sample value for example..

@@ -1,5 +1,5 @@
 {
-    disease_snps: [
+    "disease_snps": [
         {
             "id": 1,
             "name": "Diabetes",
