@@ -10,6 +10,7 @@ use Readonly;
 use Try::Tiny;
 
 use Genome::Const;
+use Genome::Log qw( log );
 
 my $_CACHE_FIND_VALUE = undef;
 
@@ -65,10 +66,11 @@ sub save {
     my $out_obj = +{ $name => $value, };
 
     my $file = $self->get_file();
-    my $text = to_json( $out_obj, +{ pretty => 1 } );
+    my $text = to_json( $out_obj, +{ pretty => 1, indent_length => 4 } );
+
     open my $fh, '>', $file
         or croak "$file $OS_ERROR";
-    print $fh, $text;
+    print $fh $text;
     close $fh;
 
     return;
