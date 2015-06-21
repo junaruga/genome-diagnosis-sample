@@ -11,6 +11,8 @@ use Try::Tiny;
 use base qw( Genome::Record );
 
 sub get_name {
+    my ($self) = @_;
+
     return 'disease_snps';
 }
 

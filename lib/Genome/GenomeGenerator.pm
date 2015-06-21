@@ -31,7 +31,7 @@ sub new {
 sub generate_genome {
     my ( $self, $options ) = @_;
 
-    my $disease_snps  = Genome::Model::DiseaseSnp::find();
+    my $disease_snps  = Genome::Model::DiseaseSnp->new()->find();
     my $snp_positions = [];
     for my $disease_snp ( @{$disease_snps} ) {
         for my $snp ( @{ $disease_snp->{possible_snps} } ) {
@@ -68,7 +68,7 @@ sub _get_snp_position {
     }
 
     my $position   = 0;
-    my $snps       = Genome::Model::Snp::find( +{ cache => 1 } );
+    my $snps       = Genome::Model::Snp->new()->find( +{ cache => 1 } );
     my @found_snps = grep { $_->{snp} eq $snp_value } @{$snps};
 
     if ( scalar @found_snps <= 0 ) {

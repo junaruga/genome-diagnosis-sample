@@ -21,7 +21,7 @@ sub new {
 }
 
 sub find {
-    my ($options) = @_;
+    my ($self, $options) = @_;
 
     my $value = undef;
     if ( $options->{cache} ) {
@@ -29,9 +29,9 @@ sub find {
     }
 
     if ( !defined $value ) {
-        my $file = Genome::Record::get_file();
-        my $obj  = Genome::Record::_get_obj_from_json_file($file);
-        my $name = Genome::Record::get_name();
+        my $file = $self->get_file();
+        my $obj  = $self->_get_obj_from_json_file($file);
+        my $name = $self->get_name();
         $value = $obj->{$name};
     }
 
@@ -39,13 +39,16 @@ sub find {
 }
 
 sub get_name {
+    my ($self) = @_;
 
     # TODO: get data file name from pm file name automatically.
     croak 'get_name should be implemented at child class';
 }
 
 sub get_file {
-    my $name = Genome::Record::get_name();
+    my ($self) = @_;
+
+    my $name = $self->get_name();
     my $file = sprintf '%s/%s.json', $Genome::Const::DATA_DIR, $name;
 
     return $file;
@@ -58,10 +61,10 @@ sub save {
         croak 'value is required.';
     }
 
-    my $name = Genome::Record::get_name();
+    my $name = $self->get_name();
     my $out_obj = +{ $name => $value, };
 
-    my $file = Genome::Record::get_file();
+    my $file = $self->get_file();
     my $text = to_json( $out_obj, +{ pretty => 1 } );
     open my $fh, '>', $file
         or croak "$file $OS_ERROR";
@@ -73,7 +76,7 @@ sub save {
 
 # Get all text data at once for sample.
 sub _get_text {
-    my ($file) = @_;
+    my ($self, $file) = @_;
 
     if ( !defined $file ) {
         croak 'file is required.';
@@ -91,13 +94,13 @@ sub _get_text {
 }
 
 sub _get_obj_from_json_file {
-    my ($file) = @_;
+    my ($self, $file) = @_;
 
     if ( !defined $file ) {
         croak 'file is required.';
     }
 
-    my $text = Genome::Record::_get_text($file);
+    my $text = $self->_get_text($file);
     my $obj  = decode_json $text;
     return $obj;
 }
