@@ -9,7 +9,7 @@ carton:
 
 tidy:
 	. ./env.sh; \
-    script/dev/tidy.sh
+	script/dev/tidy.sh
 
 critic:
 	. ./env.sh; \
@@ -24,5 +24,7 @@ testv:
 	. ./env.sh; \
 	prove -cfrmv --timer --trap --state=adrian t $(FILE)
 
-
+generate_genome:
+	. ./env.sh; \
+	perl script/generate_genome.pl
 

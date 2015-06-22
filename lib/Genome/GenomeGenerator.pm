@@ -11,7 +11,7 @@ use Try::Tiny;
 use String::Buffer;
 
 use Genome::Const;
-use Genome::Log qw( log );
+use Genome::Log qw( log debug_log );
 use Genome::Model::DiseaseSnp;
 use Genome::Model::Genome;
 use Genome::Model::Snp;
@@ -21,13 +21,17 @@ use Genome::Model::Snp;
 # Actually it is about 3.1 billions.
 # See https://en.wikipedia.org/wiki/Human_genome#Molecular_organization_and_gene_content
 Readonly my $GENOME_BP_SIZE           => 300;
-Readonly my $GENERATED_PROFILE_NUMBER => 100;
+Readonly my $DEFAULT_GENERATED_PROFILE_NUMBER => 100;
 Readonly my $SNP_APPEARED_RATE        => 0.8;
 
 sub new {
     my ( $class, $options ) = @_;
 
     my $self = ($options) ? $options : {};
+
+    $self->{profile_number} = (defined $self->{profile_number})
+        ? $self->{profile_number} : $DEFAULT_GENERATED_PROFILE_NUMBER;
+
     bless $self, $class;
 }
 
@@ -45,7 +49,12 @@ sub generate_genome {
     my $base_genome = $self->_generate_base_genome_string();
 
     my $genome_records = [];
-    for ( my $count = 0; $count < $GENERATED_PROFILE_NUMBER; $count++ ) {
+    debug_log "profile_number: " . $self->{profile_number};
+
+    my $space_digit = length $self->{profile_number};
+    my $debug_genome_format = '%' . $space_digit . 's %s';
+
+    for ( my $count = 0; $count < $self->{profile_number}; $count++ ) {
         my $profile_id = $count + 1;
         my $genome_string =
             $self->_generate_genome_string_with_snps( $base_genome,
@@ -55,6 +64,10 @@ sub generate_genome {
             genome     => $genome_string,
         };
         push @{$genome_records}, $genome_record;
+
+        my $debug_genome_message = sprintf $debug_genome_format,
+            $profile_id, $genome_string;
+        debug_log $debug_genome_message;
     }
 
     my $genome = Genome::Model::Genome->new();
