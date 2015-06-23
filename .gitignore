@@ -12,3 +12,5 @@
 /local/*
 # Test
 .prove
+# This project
+/data/genomes.json
