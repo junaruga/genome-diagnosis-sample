@@ -8,7 +8,7 @@ use Exporter 'import';
 use vars qw( @EXPORT @EXPORT_OK );
 
 @EXPORT    = qw();
-@EXPORT_OK = qw( log debug_log );
+@EXPORT_OK = qw( log debug_log error_log );
 
 our $IS_DEBUG = 0;
 
@@ -35,6 +35,14 @@ sub debug_log {
     if ($IS_DEBUG) {
         Genome::Log::log('[DEBUG] ' . $message, $ref);
     }
+
+    return;
+}
+
+sub error_log {
+    my ( $message, $ref ) = @_;
+
+    Genome::Log::log('[ERROR] ' . $message, $ref);
 
     return;
 }

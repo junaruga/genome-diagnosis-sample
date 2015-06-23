@@ -1,4 +1,5 @@
 requires 'Data::Dumper::Concise';
+requires 'List::MoreUtils';
 requires 'List::Util';
 requires 'Try::Tiny';
 requires 'Test::More', '1.001012';

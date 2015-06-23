@@ -10,7 +10,7 @@ use Readonly;
 use Try::Tiny;
 use version; our $VERSION = qv('v1.0.0');
 
-use Genome::Log qw( log debug_log );
+use Genome::Log qw( log debug_log error_log );
 use Genome::GenomeGenerator;
 
 Readonly my $STATUS => +{
@@ -38,7 +38,7 @@ sub main {
         $generator->generate_genome();
     }
     catch {
-        log "ERROR: $_";
+        error_log $_;
         $exit_status = $STATUS->{error};
     };
 

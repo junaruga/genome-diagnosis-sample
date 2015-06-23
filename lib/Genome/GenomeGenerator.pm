@@ -5,16 +5,16 @@ use warnings;
 use Carp;
 use Data::Dumper::Concise;
 use English qw( -no_match_vars );
+use List::MoreUtils qw( uniq );
 use List::Util;
 use Readonly;
 use Try::Tiny;
 use String::Buffer;
 
+use Genome::SnpAnalysis;
 use Genome::Const;
 use Genome::Log qw( log debug_log );
-use Genome::Model::DiseaseSnp;
 use Genome::Model::Genome;
-use Genome::Model::Snp;
 
 # Total number of base pair.
 # Set sample value for example..
@@ -38,14 +38,18 @@ sub new {
 sub generate_genome {
     my ( $self, $options ) = @_;
 
-    my $disease_snps  = Genome::Model::DiseaseSnp->new()->find();
+    my $snp_analysis = Genome::SnpAnalysis->new();
+    my $disease_snps = $snp_analysis->get_disease_snps_with_positions();
+    #debug_log 'disease_snps: ', $disease_snps;
     my $snp_positions = [];
     for my $disease_snp ( @{$disease_snps} ) {
-        for my $snp ( @{ $disease_snp->{possible_snps} } ) {
-            my $position = $self->_get_snp_position($snp);
-            push @{$snp_positions}, $position;
-        }
+        my $positions = $disease_snp->{snp_positions};
+        push @{$snp_positions}, @{$positions};
     }
+    my @sorted_positions = sort { $a <=> $b } @{$snp_positions};
+    @sorted_positions = uniq @sorted_positions;
+    $snp_positions = \@sorted_positions;
+
     my $base_genome = $self->_generate_base_genome_string();
 
     my $genome_records = [];
@@ -71,27 +75,12 @@ sub generate_genome {
     }
 
     my $genome = Genome::Model::Genome->new();
-    $genome->save($genome_records);
+    $genome->save(+{
+        base => $base_genome,
+        genomes => $genome_records,
+    });
 
     return;
-}
-
-sub _get_snp_position {
-    my ( $self, $snp_value ) = @_;
-
-    if ( !defined $snp_value ) {
-        croak 'snp_value is required.';
-    }
-
-    my $position   = 0;
-    my $snps       = Genome::Model::Snp->new()->find( +{ cache => 1 } );
-    my @found_snps = grep { $_->{snp} eq $snp_value } @{$snps};
-
-    if ( scalar @found_snps <= 0 ) {
-        croak "snp: [$snp_value] can not befound in snps data.";
-    }
-
-    return $found_snps[0]->{position};
 }
 
 sub _generate_base_genome_string {
