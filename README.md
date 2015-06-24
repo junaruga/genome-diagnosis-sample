@@ -39,7 +39,7 @@ Check generated genome data file.
 
 Run the script which anlyze wether variant is present for one profile's genome string.
 
-    $ bin/appperl script/print_genetic_risk_factors.pl
+    $ bin/appperl script/print_genetic_risk_factors.pl -p {profile_id}
 
 You can use following print_genetic_risk_factors.pl command options.
 
