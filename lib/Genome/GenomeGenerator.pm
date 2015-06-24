@@ -118,13 +118,20 @@ sub _generate_genome_string_with_snps {
     }
 
     my $buff = String::Buffer->new();
-    for ( my $pos = 0; $pos < length($base_genome); $pos++ ) {
-        my $char = substr( $base_genome, $pos, 1 );
-        if ( List::Util::first { $_ == $pos } @{$snp_positions} ) {
-
+    for ( my $n = 0; $n < length($base_genome); $n++ ) {
+        my $char = substr( $base_genome, $n, 1 );
+        # position of snp_positions, is started from 1.
+        my $target_snp_position = ($n + 1);
+        if ( List::Util::first { $_ == $target_snp_position }
+            @{$snp_positions} ) {
             # Set another bp.
             # Value is different with base's char by 75% (= 3/4).
-            $char = $self->_get_base_pair_char_at_random();
+            my $replaced_char = $self->_get_base_pair_char_at_random();
+
+            debug_log "Change char on snp_possion: $target_snp_position, "
+                . "[$char] to [$replaced_char]";
+
+            $char = $replaced_char;
         }
         $buff->write($char);
     }

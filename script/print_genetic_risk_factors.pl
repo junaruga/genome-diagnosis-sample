@@ -66,7 +66,9 @@ sub print_result {
         printf "%-20s %20s %10s\n",
             $item->{name} . ',',
             $variant_disp . ',',
-            'Risk: ' . ($item->{rate} * 100) . '%';
+            'Risk: ' . ($item->{rate} * 100) . '% ('
+            . 'Total: ' . $item->{total_variant_num} . ', '
+            . 'Found: ' . $item->{variant_num} . ')';
     }
     print_line();
 

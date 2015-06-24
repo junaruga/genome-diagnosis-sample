@@ -5,6 +5,7 @@ use warnings;
 use Carp;
 use Data::Dumper::Concise;
 use English qw( -no_match_vars );
+use Math::Round;
 use Readonly;
 use Try::Tiny;
 
@@ -69,17 +70,24 @@ sub analyze_genome_string {
         croak 'base is required.';
     }
 
+    debug_log "target: $target";
+    debug_log "base  : $base";
+
     #$self->{disease_snps}
     my $result = +{
         items => [],
     };
     my $disease_snps = $self->{disease_snps};
+    #debug_log 'disease_snps:', $disease_snps;
+
     for my $disease_snp (@{$disease_snps}) {
-        my $positions = $disease_snp->{snp_possitons};
+        my $positions = $disease_snp->{snp_positions};
         my $variant_count = 0;
         for my $position (@{$positions}) {
-            my $target_char = substr( $target, $position, 1 );
-            my $base_char = substr( $base, $position, 1 );
+            debug_log "snp position: $position";
+            my $n = $position - 1;
+            my $target_char = substr( $target, $n, 1 );
+            my $base_char = substr( $base, $n, 1 );
             if ( $target_char ne $base_char ) {
                 $variant_count++;
             }
@@ -88,11 +96,14 @@ sub analyze_genome_string {
         my $num_of_position = scalar @{$positions};
         my $rate = ($num_of_position > 0)
             ? $variant_count / $num_of_position : 0;
+        $rate = nearest .01, $rate;
         my $is_variant_present = ($variant_count > 0) ? 1 : 0;
 
         my $item = +{
             name => $disease_snp->{name},
             rate => $rate,
+            total_variant_num => $num_of_position,
+            variant_num => $variant_count,
             is_variant_present => $is_variant_present,
         };
         push @{ $result->{items} }, $item;

@@ -4,6 +4,11 @@
         { "snp": "rs100003", "position": 9 },
         { "snp": "i6060864", "position": 12 },
         { "snp": "rs1000007", "position": 15 },
+        { "snp": "rs1000025", "position": 25 },
+        { "snp": "rs1000033", "position": 33 },
+        { "snp": "rs1000035", "position": 35 },
+        { "snp": "rs1000036", "position": 36 },
+        { "snp": "rs1000043", "position": 43 },
         { "snp": "rs28358574", "position": 53 },
         { "snp": "rs10001483", "position": 105 }
     ]

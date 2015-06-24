@@ -11,7 +11,7 @@
             "id": 2,
             "name": "Heart disease",
             "possible_snps": [
-                "rs10001483", "rs1000152"
+                "rs10001483", "rs1000152", "rs1000025", "rs1000033", "rs1000035"
             ]
         },
         {
@@ -25,7 +25,7 @@
             "id": 4,
             "name": "Alzheimer",
             "possible_snps": [
-                "rs1000007", "rs100003"
+                "rs1000007", "rs100003", "rs1000043"
             ]
         }
     ]
