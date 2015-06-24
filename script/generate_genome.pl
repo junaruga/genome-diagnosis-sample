@@ -14,7 +14,7 @@ use Genome::Log qw( log debug_log error_log );
 use Genome::GenomeGenerator;
 
 Readonly my $STATUS => +{
-    ok => 0,
+    ok    => 0,
     error => 1,
 };
 
@@ -22,19 +22,18 @@ sub main {
     my $exit_status = $STATUS->{ok};
 
     my $profile_number = undef;
-    my $is_debug = 0;
+    my $is_debug       = 0;
     try {
         GetOptions(
             'number|n=i' => \$profile_number,
-            'debug' => \$is_debug,
+            'debug'      => \$is_debug,
         );
         if ($is_debug) {
             $Genome::Log::IS_DEBUG = 1;
         }
 
-        my $generator = Genome::GenomeGenerator->new(+{
-            profile_number => $profile_number,
-        });
+        my $generator = Genome::GenomeGenerator->new(
+            +{ profile_number => $profile_number, } );
         $generator->generate_genome();
     }
     catch {

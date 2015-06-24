@@ -22,7 +22,7 @@ sub new {
 }
 
 sub find {
-    my ($self, $options) = @_;
+    my ( $self, $options ) = @_;
 
     my $value = undef;
     if ( $options->{cache} ) {
@@ -78,7 +78,7 @@ sub save {
 
 # Get all text data at once for sample.
 sub _get_text {
-    my ($self, $file) = @_;
+    my ( $self, $file ) = @_;
 
     if ( !defined $file ) {
         croak 'file is required.';
@@ -96,7 +96,7 @@ sub _get_text {
 }
 
 sub _get_obj_from_json_file {
-    my ($self, $file) = @_;
+    my ( $self, $file ) = @_;
 
     if ( !defined $file ) {
         croak 'file is required.';

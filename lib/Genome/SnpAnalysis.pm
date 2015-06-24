@@ -26,7 +26,7 @@ sub new {
 }
 
 sub get_disease_snps_with_positions {
-    my ( $self ) = @_;
+    my ($self) = @_;
 
     return $self->{disease_snps};
 }
@@ -39,12 +39,12 @@ sub analyze {
         croak 'profile_id is required.';
     }
 
-    my $genome_obj = Genome::Model::Genome->new()->find();
+    my $genome_obj         = Genome::Model::Genome->new()->find();
     my $base_genome_string = $genome_obj->{base};
-    my $genomes = $genome_obj->{genomes};
+    my $genomes            = $genome_obj->{genomes};
 
     my $target_genome_string = undef;
-    for my $genome (@{$genomes}) {
+    for my $genome ( @{$genomes} ) {
         if ( $genome->{profile_id} == $profile_id ) {
             $target_genome_string = $genome->{genome};
             last;
@@ -54,8 +54,9 @@ sub analyze {
         croak "genome string is not found. profile_id: $profile_id";
     }
 
-    my $result = $self->analyze_genome_string($target_genome_string,
-        $base_genome_string);
+    my $result =
+        $self->analyze_genome_string( $target_genome_string,
+        $base_genome_string );
 
     return $result;
 }
@@ -74,36 +75,35 @@ sub analyze_genome_string {
     debug_log "base  : $base";
 
     #$self->{disease_snps}
-    my $result = +{
-        items => [],
-    };
+    my $result = +{ items => [], };
     my $disease_snps = $self->{disease_snps};
+
     #debug_log 'disease_snps:', $disease_snps;
 
-    for my $disease_snp (@{$disease_snps}) {
-        my $positions = $disease_snp->{snp_positions};
+    for my $disease_snp ( @{$disease_snps} ) {
+        my $positions     = $disease_snp->{snp_positions};
         my $variant_count = 0;
-        for my $position (@{$positions}) {
+        for my $position ( @{$positions} ) {
             debug_log "snp position: $position";
-            my $n = $position - 1;
+            my $n           = $position - 1;
             my $target_char = substr( $target, $n, 1 );
-            my $base_char = substr( $base, $n, 1 );
+            my $base_char   = substr( $base, $n, 1 );
             if ( $target_char ne $base_char ) {
                 $variant_count++;
             }
         }
 
         my $num_of_position = scalar @{$positions};
-        my $rate = ($num_of_position > 0)
-            ? $variant_count / $num_of_position : 0;
+        my $rate =
+            ( $num_of_position > 0 ) ? $variant_count / $num_of_position : 0;
         $rate = nearest .01, $rate;
-        my $is_variant_present = ($variant_count > 0) ? 1 : 0;
+        my $is_variant_present = ( $variant_count > 0 ) ? 1 : 0;
 
         my $item = +{
-            name => $disease_snp->{name},
-            rate => $rate,
-            total_variant_num => $num_of_position,
-            variant_num => $variant_count,
+            name               => $disease_snp->{name},
+            rate               => $rate,
+            total_variant_num  => $num_of_position,
+            variant_num        => $variant_count,
             is_variant_present => $is_variant_present,
         };
         push @{ $result->{items} }, $item;

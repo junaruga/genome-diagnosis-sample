@@ -33,7 +33,7 @@ sub debug_log {
     my ( $message, $ref ) = @_;
 
     if ($IS_DEBUG) {
-        Genome::Log::log('[DEBUG] ' . $message, $ref);
+        Genome::Log::log( '[DEBUG] ' . $message, $ref );
     }
 
     return;
@@ -42,7 +42,7 @@ sub debug_log {
 sub error_log {
     my ( $message, $ref ) = @_;
 
-    Genome::Log::log('[ERROR] ' . $message, $ref);
+    Genome::Log::log( '[ERROR] ' . $message, $ref );
 
     return;
 }

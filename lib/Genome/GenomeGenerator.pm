@@ -20,17 +20,19 @@ use Genome::Model::Genome;
 # Set sample value for example..
 # Actually it is about 3.1 billions.
 # See https://en.wikipedia.org/wiki/Human_genome#Molecular_organization_and_gene_content
-Readonly my $GENOME_BP_SIZE           => 300;
+Readonly my $GENOME_BP_SIZE                   => 300;
 Readonly my $DEFAULT_GENERATED_PROFILE_NUMBER => 100;
-Readonly my $SNP_APPEARED_RATE        => 0.8;
+Readonly my $SNP_APPEARED_RATE                => 0.8;
 
 sub new {
     my ( $class, $options ) = @_;
 
     my $self = ($options) ? $options : {};
 
-    $self->{profile_number} = (defined $self->{profile_number})
-        ? $self->{profile_number} : $DEFAULT_GENERATED_PROFILE_NUMBER;
+    $self->{profile_number} =
+        ( defined $self->{profile_number} )
+        ? $self->{profile_number}
+        : $DEFAULT_GENERATED_PROFILE_NUMBER;
 
     bless $self, $class;
 }
@@ -40,6 +42,7 @@ sub generate_genome {
 
     my $snp_analysis = Genome::SnpAnalysis->new();
     my $disease_snps = $snp_analysis->get_disease_snps_with_positions();
+
     #debug_log 'disease_snps: ', $disease_snps;
     my $snp_positions = [];
     for my $disease_snp ( @{$disease_snps} ) {
@@ -48,14 +51,14 @@ sub generate_genome {
     }
     my @sorted_positions = sort { $a <=> $b } @{$snp_positions};
     @sorted_positions = uniq @sorted_positions;
-    $snp_positions = \@sorted_positions;
+    $snp_positions    = \@sorted_positions;
 
     my $base_genome = $self->_generate_base_genome_string();
 
     my $genome_records = [];
     debug_log "profile_number: " . $self->{profile_number};
 
-    my $space_digit = length $self->{profile_number};
+    my $space_digit         = length $self->{profile_number};
     my $debug_genome_format = '%' . $space_digit . 's %s';
 
     for ( my $count = 0; $count < $self->{profile_number}; $count++ ) {
@@ -75,10 +78,11 @@ sub generate_genome {
     }
 
     my $genome = Genome::Model::Genome->new();
-    $genome->save(+{
-        base => $base_genome,
-        genomes => $genome_records,
-    });
+    $genome->save(
+        +{  base    => $base_genome,
+            genomes => $genome_records,
+        }
+    );
 
     return;
 }
@@ -120,10 +124,12 @@ sub _generate_genome_string_with_snps {
     my $buff = String::Buffer->new();
     for ( my $n = 0; $n < length($base_genome); $n++ ) {
         my $char = substr( $base_genome, $n, 1 );
+
         # position of snp_positions, is started from 1.
-        my $target_snp_position = ($n + 1);
+        my $target_snp_position = ( $n + 1 );
         if ( List::Util::first { $_ == $target_snp_position }
-            @{$snp_positions} ) {
+            @{$snp_positions} )
+        {
             # Set another bp.
             # Value is different with base's char by 75% (= 3/4).
             my $replaced_char = $self->_get_base_pair_char_at_random();

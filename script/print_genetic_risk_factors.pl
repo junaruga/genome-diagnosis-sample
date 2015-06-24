@@ -14,7 +14,7 @@ use Genome::Log qw( log debug_log error_log );
 use Genome::SnpAnalysis;
 
 Readonly my $STATUS => +{
-    ok => 0,
+    ok    => 0,
     error => 1,
 };
 
@@ -22,11 +22,11 @@ sub main {
     my $exit_status = $STATUS->{ok};
 
     my $profile_id = undef;
-    my $is_debug = 0;
+    my $is_debug   = 0;
     try {
         GetOptions(
             'profile_id|p=i' => \$profile_id,
-            'debug' => \$is_debug,
+            'debug'          => \$is_debug,
         );
         if ($is_debug) {
             $Genome::Log::IS_DEBUG = 1;
@@ -36,9 +36,7 @@ sub main {
         }
 
         my $analysis = Genome::SnpAnalysis->new();
-        my $result = $analysis->analyze(+{
-            profile_id => $profile_id,
-        });
+        my $result = $analysis->analyze( +{ profile_id => $profile_id, } );
 
         print_result($result);
     }
@@ -51,7 +49,7 @@ sub main {
 }
 
 sub print_result {
-    my ( $result ) = @_;
+    my ($result) = @_;
 
     if ( !defined $result ) {
         croak 'result is required.';
@@ -60,15 +58,20 @@ sub print_result {
     print_line();
     printf "Genetic Risk Factors\n";
     print_line();
-    for my $item (@{ $result->{items} }) {
-        my $variant_disp = ($item->{is_variant_present})
-            ? 'Variant Present' : 'Variant Absent';
+    for my $item ( @{ $result->{items} } ) {
+        my $variant_disp =
+            ( $item->{is_variant_present} )
+            ? 'Variant Present'
+            : 'Variant Absent';
         printf "%-20s %20s %10s\n",
             $item->{name} . ',',
             $variant_disp . ',',
-            'Risk: ' . ($item->{rate} * 100) . '% ('
-            . 'Total: ' . $item->{total_variant_num} . ', '
-            . 'Found: ' . $item->{variant_num} . ')';
+            'Risk: '
+            . ( $item->{rate} * 100 ) . '% ('
+            . 'Total: '
+            . $item->{total_variant_num} . ', '
+            . 'Found: '
+            . $item->{variant_num} . ')';
     }
     print_line();
 
