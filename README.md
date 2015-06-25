@@ -28,7 +28,11 @@ tool), you can refer following blog article: perlbrew, cpanm, carton's sections 
         $ git clone https://github.com/junaruga/genome-diagnosis-sample.git
         $ cd genome-diagnosis-sample/
 
-4. Run the script which generate genome data for test.
+4. Install CPAN modules by Carton.
+
+        $ make carton
+
+5. Run the script which generate genome data for test.
 
         $ bin/appperl script/generate_genome.pl
 
@@ -39,7 +43,7 @@ tool), you can refer following blog article: perlbrew, cpanm, carton's sections 
     | -n | Generated genome data number (default: 100) |
     | --debug | Output debug message |
 
-5. Check generated genome data file.
+6. Check generated genome data file.
 
         $ ls -l data/genomes.json
         $ view data/genomes.json
@@ -56,7 +60,7 @@ tool), you can refer following blog article: perlbrew, cpanm, carton's sections 
             }
         }
 
-6. Run the script which anlyze wether variant is present for one profile's genome string.
+7. Run the script which anlyze wether variant is present for one profile's genome string.
 
         $ bin/appperl script/print_genetic_risk_factors.pl -p {profile_id}
 
@@ -67,7 +71,7 @@ tool), you can refer following blog article: perlbrew, cpanm, carton's sections 
     | -p | profile_id (required). See genomes.json |
     | --debug | Output debug message |
 
-7. Run sample
+    The following is the sample to run.
 
         $ bin/appperl script/print_genetic_risk_factors.pl -p 3
         ------------------------------------------------------------
