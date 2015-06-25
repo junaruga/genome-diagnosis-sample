@@ -5,73 +5,66 @@ As the Analysis log is simpliped, comparison by 3 base pair unit, or recommendat
 
 ## Getting Started
 
-To run this project, You need to install Perl and Carton (Perl package manager).
+To run this project, You need Perl and Carton (Perl package manager).
 
-### Install Perl and Carton
+If you would like to use installed system perl as running environment, you can follow to step 1 and 2 simply.
 
-According to installing  perl using perlbrew, and carton, please refer my blog article.
-=> [Blog | Set up Perl development environment](http://junaruga.hatenablog.com/entry/2014/08/23/030632)
+If you would like to use another perl using perlview (perl version management 
+tool), you can refer following blog article: perlbrew, cpanm, carton's sections instead of step 1 and 2. => [Blog | Set up Perl development environment](http://junaruga.hatenablog.com/entry/2014/08/23/030632)
 
-### Run this project\'s program
+1. Install cpanm
 
-Change your git directory, and download files.
+        $ curl -L http://cpanmin.us | perl - App::cpanminus
+        $ which cpanm
 
-    $ cd $GIT_DIR
-    $ git clone https://github.com/junaruga/genome-diagnosis-sample.git
-    $ cd genome-diagnosis-sample/
+2. Install Carton
 
-Run the script which generate genome data for test.
+        $ cpanm Carton
+        $ which carton
 
-    $ bin/appperl script/generate_genome.pl
+3. Change your git directory, and download files.
 
-You can use following generate_genome.pl command options.
+        $ cd $GIT_DIR
+        $ git clone https://github.com/junaruga/genome-diagnosis-sample.git
+        $ cd genome-diagnosis-sample/
 
-| Option | Decription |
-|--------------| -----------------------|
-| -n | generated genome data number (Default: 100) |
-| --debug | Output debug message |
+4. Run the script which generate genome data for test.
 
+        $ bin/appperl script/generate_genome.pl
 
-Check generated genome data file.
+    You can use following generate_genome.pl command options.
 
-	$ ls -l data/genomes.json
-	$ view data/genomes.json
+    | Option | Decription |
+    |--------------| -----------------------|
+    | -n | generated genome data number (Default: 100) |
+    | --debug | Output debug message |
 
-Run the script which anlyze wether variant is present for one profile's genome string.
+5. Check generated genome data file.
 
-    $ bin/appperl script/print_genetic_risk_factors.pl -p {profile_id}
+        $ ls -l data/genomes.json
+        $ view data/genomes.json
 
-You can use following print_genetic_risk_factors.pl command options.
+6. Run the script which anlyze wether variant is present for one profile's genome string.
 
-| Option | Decription |
-|--------------| -----------------------|
-| -p | profile_id (required). See genomes.json |
-| --debug | Output debug message |
+        $ bin/appperl script/print_genetic_risk_factors.pl -p {profile_id}
 
-Running Sample
+    You can use following print_genetic_risk_factors.pl command options.
 
-    $ bin/appperl script/print_genetic_risk_factors.pl -p 3
-    ------------------------------------------------------------
-    Genetic Risk Factors
-    ------------------------------------------------------------
-    Diabetes,                Variant Present, Risk: 100% (Total: 1, Found: 1)
-    Heart disease,           Variant Present, Risk: 80% (Total: 5, Found: 4)
-    Cancer,                  Variant Present, Risk: 100% (Total: 1, Found: 1)
-    Alzheimer,               Variant Present, Risk: 67% (Total: 3, Found: 2)
-    ------------------------------------------------------------
+    | Option | Decription |
+    |--------------| -----------------------|
+    | -p | profile_id (required). See genomes.json |
+    | --debug | Output debug message |
+
+7. Run sample
+
+        $ bin/appperl script/print_genetic_risk_factors.pl -p 3
+        ------------------------------------------------------------
+        Genetic Risk Factors
+        ------------------------------------------------------------
+        Diabetes,                Variant Present, Risk: 100% (Total: 1, Found: 1)
+        Heart disease,           Variant Present, Risk: 80% (Total: 5, Found: 4)
+        Cancer,                  Variant Present, Risk: 100% (Total: 1, Found: 1)
+        Alzheimer,               Variant Present, Risk: 67% (Total: 3, Found: 2)
+        ------------------------------------------------------------
 
 That's it.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
