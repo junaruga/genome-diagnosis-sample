@@ -36,7 +36,7 @@ tool), you can refer following blog article: perlbrew, cpanm, carton's sections 
 
     | Option | Decription |
     |--------------| -----------------------|
-    | -n | generated genome data number (Default: 100) |
+    | -n | Generated genome data number (default: 100) |
     | --debug | Output debug message |
 
 5. Check generated genome data file.
