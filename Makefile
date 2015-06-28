@@ -24,6 +24,9 @@ testv:
 	. ./env.sh; \
 	prove -cfrmv --timer --trap --state=adrian t $(FILE)
 
+generate-genome:
+	./bin/appperl script/generate_genome.pl -n 20
+
 start-server:
 	./bin/appperl ./script/app/app.pl
 
