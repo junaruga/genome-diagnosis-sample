@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Genome Analysis</title></head>
+    <body>
+      <h2>Genome Analysis</h2>
+      <pre>
+      Result
+      Profile ID: <%= $profile_id %>
+      </pre>
+    </body>
+</html>
+
