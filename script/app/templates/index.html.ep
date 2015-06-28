@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Genome Analysis</title></head>
+    <body>
+      <h2>Genome Analysis</h2>
+      <a href="/analyze/2">Analyze</a>
+    </body>
+</html>
+
