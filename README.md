@@ -84,3 +84,24 @@ tool), you can refer following blog article: perlbrew, cpanm, carton's sections 
         ------------------------------------------------------------
 
 That's it.
+
+## Use this anlysis script by Web UI.
+
+You can use this script from your browser.
+If you want to use it from your browser, you can follow below way.
+
+1. Install Mojolicious
+
+    We are using [Mojolicious](http://mojolicio.us) as web application.
+    Run following command.
+
+        $ curl -L https://cpanmin.us | perl - -M https://cpan.metacpan.org -n Mojolicious
+
+2. Run server.
+
+        $ cd $GIT_DIR/genome-diagnosis-sample/
+        $ make start-server
+
+3. Access the web site.
+
+    Access http://127.0.0.1:8080 from your browser.
