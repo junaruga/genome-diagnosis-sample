@@ -10,7 +10,7 @@
             body {
                 padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
             }
-            #inner-result {
+            #result pre {
                 border-style: none;
             }
         </style>
@@ -21,21 +21,21 @@
         <![endif]-->
     </head>
     <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <!-- Number of menu items -->
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="brand" href="#">Genome Analysis</a>
-                <div class="nav-collapse collapse">
-                    <ul class="nav">
-                        <li class="active"><a href="#">Home</a></li>
-                    </ul>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <!-- Number of menu items -->
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="brand" href="#">Genome Analysis</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
 
         <div class="container">
@@ -56,7 +56,7 @@
                     </form>
                 </div>
                 <div id="result" class="span8 well">
-                    <pre id="inner-result"></pre>
+                    <pre>Result</pre>
                 </div>
             </div>
         </div>
@@ -71,12 +71,14 @@
                     $.ajax({
                         url: url,
                         dataType: 'json',
+                        async: false,
                     })
                     .done(function(data_obj) {
                         var json_str = JSON.stringify(data_obj, null, 4);
                         //alert("Result data: " + json_str.slice( 0, 100 ));
-                        $("#inner-result").html(json_str);
+                        $("div#result pre").text(json_str);
                     });
+                    return false;
                 });
             });
         </script>
