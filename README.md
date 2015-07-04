@@ -105,3 +105,8 @@ If you want to use it from your browser, you can follow below way.
 3. Access the web site.
 
     Access http://127.0.0.1:8080 from your browser.
+
+4. You can select profile_id, and click analyze button.
+
+    ![Analyze Resk Factors](doc/img/analyze_risk_factors_result.png)
+
